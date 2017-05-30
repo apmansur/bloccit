@@ -21,6 +21,16 @@ require 'random_data'
    )
  end
  
+ # Create Unique Post to test for idempotence
+ 
+ Post.create!(
+     
+     title: "unique post",
+     body: "unique body"
+     
+    )
+ 
+ end
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
