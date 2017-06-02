@@ -23,14 +23,14 @@ require 'random_data'
  
  # Create Unique Post to test for idempotence
  
- Post.create!(
+ Post.find_or_create_by!(
      
      title: "unique post",
      body: "unique body"
      
     )
  
- end
+
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"

@@ -1,3 +1,4 @@
 class Post < ActiveRecord::Base
-    has_many :comments
+    validates :body, :title, uniqueness: true
+    has_many :comments 
 end
