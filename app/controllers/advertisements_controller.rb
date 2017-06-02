@@ -8,7 +8,7 @@ class AdvertisementsController < ApplicationController
   end
 
   def new
-     @advertisements = Advertisement.new
+     @advertisement = Advertisement.new
   end
 
   def edit
