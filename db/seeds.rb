@@ -21,6 +21,17 @@ require 'random_data'
      price:  rand(10..100)
    )
  end
+ 
+   # Create Questions
+ 10.times do
+ 
+   Question.create!(
+
+     title:  RandomData.random_sentence,
+     body:   RandomData.random_paragraph,
+     resolved:  [true, false].sample
+   )
+ end
 
  
  # Create Comments
@@ -47,3 +58,4 @@ require 'random_data'
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{Advertisement.count} advertisements created"
+ puts "#{Question.count} questions created"
