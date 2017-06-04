@@ -52,9 +52,18 @@ require 'random_data'
      body: "unique body"
      
     )
+  # Create Topics
+ 15.times do
+   Topic.create!(
+     name:         RandomData.random_sentence,
+     description:  RandomData.random_paragraph
+   )
+ end
+ topics = Topic.all
  
 
  puts "Seed finished"
+ puts "#{Topic.count} topics created"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{Advertisement.count} advertisements created"
