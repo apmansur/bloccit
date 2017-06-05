@@ -1,6 +1,5 @@
  <h1><%= @topic.name %></h1>
- 
- <%= link_to "Edit Topic", edit_topic_path, class: 'btn btn-success' %>
+
  
  <div class="row">
    <div class="col-md-8">
@@ -21,9 +20,31 @@
          </div>
        </div>
      <% end %>
+     
+       <% @topic.sponsereds.each do |sponsered| %>
+       <div class="media">
+         <div class="media-body">
+           <h4 class="media-heading">
+             <%= link_to sponsered.title, topic_sponsered_path(@topic, sponsered) %>
+           </h4>
+           
+            <small>
+             submitted <%= time_ago_in_words(sponsered.created_at) %> ago <br>
+             <p>This ad is sponsered</p>
+           </small>
+           
+         </div>
+       </div>
+     <% end %>
+     <%= link_to "Edit Topic", edit_topic_path, class: 'btn btn-success' %>
    </div>
+   
+    
+   
+   
    <div class="col-md-4">
      <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
+     <%= link_to "New Sponsered Post", new_topic_sponsered_path(@topic), class: 'btn btn-success' %>
      <%= link_to "Delete Topic", @topic, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this topic?' } %>
  ...
    </div>
