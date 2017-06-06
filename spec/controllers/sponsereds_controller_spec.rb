@@ -29,17 +29,17 @@ RSpec.describe SponseredsController, type: :controller do
     describe "sponsered create" do
 
       it "increases the number of Sponsered by 1" do
-          expect{sponsered :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}}.to change(Sponsered,:count).by(1)
+          expect{post :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}}.to change(Sponsered,:count).by(1)
       end
  
       it "assigns the new sponsered to @sponsered" do
-        sponsered :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph , price: 99}
+        post :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph , price: 99}
         expect(assigns(:sponsered)).to eq Sponsered.last
       end
  
 
       it "redirects to the new sponsered" do
-        sponsered :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph , price: 99}
+        post :create, topic_id: my_topic.id, sponsered: {title: RandomData.random_sentence, body: RandomData.random_paragraph , price: 99}
        expect(response).to redirect_to [my_topic, Sponsered.last]
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe SponseredsController, type: :controller do
        expect(sponsered_instance.id).to eq my_sponsered.id
        expect(sponsered_instance.title).to eq my_sponsered.title
        expect(sponsered_instance.body).to eq my_sponsered.body
-       expect(updated_sponsered.price).to eq my_sponsered.price
+       expect(sponsered_instance.price).to eq my_sponsered.price
      end
    end
    
@@ -94,7 +94,7 @@ RSpec.describe SponseredsController, type: :controller do
        new_body = RandomData.random_paragraph
        new_price = 99
  
-      put :update, topic_id: my_topic.id, id: my_sponsered.id, sponsered: {title: new_title, body: new_body}
+      put :update, topic_id: my_topic.id, id: my_sponsered.id, sponsered: {title: new_title, body: new_body, price: new_price}
  
 
        updated_sponsered = assigns(:sponsered)
