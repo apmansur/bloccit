@@ -1,15 +1,24 @@
 require 'random_data'
 
- # Create Posts
- 50.times do
+  # Create Users
+   5.times do
+   User.create!(
  
-   Post.create!(
-
-     title:  RandomData.random_sentence,
-     body:   RandomData.random_paragraph
+   name:     RandomData.random_name,
+   email:    RandomData.random_email,
+   password: RandomData.random_sentence
    )
  end
- posts = Post.all
+ users = User.all
+
+  # Create Topics
+ 15.times do
+   Topic.create!(
+     name:         RandomData.random_sentence,
+     description:  RandomData.random_paragraph
+   )
+ end
+ topics = Topic.all
  
   # Create Advertisements
  10.times do
@@ -21,6 +30,19 @@ require 'random_data'
      price:  rand(10..100)
    )
  end
+ 
+
+  # Create Posts
+ 50.times do
+ 
+   Post.create!(
+     user:   users.sample,
+     topic:  topics.sample,
+     title:  RandomData.random_sentence,
+     body:   RandomData.random_paragraph
+   )
+ end
+ posts = Post.all
  
    # Create Questions
  10.times do
@@ -43,6 +65,7 @@ require 'random_data'
      body: RandomData.random_paragraph
    )
  end
+
  
  # Create Unique Post to test for idempotence
  
@@ -52,14 +75,13 @@ require 'random_data'
      body: "unique body"
      
     )
-  # Create Topics
- 15.times do
-   Topic.create!(
-     name:         RandomData.random_sentence,
-     description:  RandomData.random_paragraph
-   )
- end
- topics = Topic.all
+
+ 
+   user = User.first
+   user.update_attributes!(
+   email: 'youremail.com', # replace this with your personal email
+   password: 'helloworld'
+ )
  
 
  puts "Seed finished"
@@ -68,3 +90,4 @@ require 'random_data'
  puts "#{Comment.count} comments created"
  puts "#{Advertisement.count} advertisements created"
  puts "#{Question.count} questions created"
+ puts "#{User.count} users created"
