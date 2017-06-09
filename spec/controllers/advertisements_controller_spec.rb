@@ -3,6 +3,11 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe AdvertisementsController, type: :controller do
+ let(:my_user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
+   let(:my_topic) { Topic.create!(name:  RandomData.random_sentence, description: RandomData.random_paragraph) }
+   let(:my_post) { my_topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: my_user) }
+   
+
  let (:my_ad) do
    Advertisement.create(
      id: 1,
@@ -47,18 +52,18 @@ end
       describe "advertisement create" do
 
       it "increases the number of advertisements by 1" do
-        expect{advertisement :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}}.to change(Advertisement,:count).by(1)
+        expect{post :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}}.to change(Advertisement,:count).by(1)
       end
  
  
       it "assigns the new advertisement to @advertisement" do
-        advertisement :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}
+        post :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}
         expect(assigns(:advertisement)).to eq Advertisement.last
       end
  
 
       it "redirects to the new advertisement" do
-        advertisement :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}
+        post :create, advertisement: {title: RandomData.random_sentence, body: RandomData.random_paragraph, price: 99}
         expect(response).to redirect_to Advertisement.last
       end
     end
@@ -66,26 +71,28 @@ end
     
        describe "GET edit" do
      it "returns http success" do
-       get :edit, {id: my_post.id}
+       get :edit, {id: (my_ad).id}
        expect(response).to have_http_status(:success)
-     end
+   end
  
      it "renders the #edit view" do
-       get :edit, {id: my_post.id}
- # #1
+       get :edit, {id: (my_ad).id}
+
        expect(response).to render_template :edit
      end
  
- # #2
-     it "assigns post to be updated to @post" do
-       get :edit, {id: my_post.id}
  
-       post_instance = assigns(:post)
+     it "assigns advertisement to be updated to @advertisement" do
+       get :edit, {id: (my_ad).id}
  
-       expect(post_instance.id).to eq my_post.id
-       expect(post_instance.title).to eq my_post.title
-       expect(post_instance.body).to eq my_post.body
+       post_instance = assigns(:advertisement)
+ 
+       expect(post_instance.id).to eq my_ad.id
+       expect(post_instance.title).to eq my_ad.title
+       expect(post_instance.body).to eq my_ad.body
+       expect(post_instance.price).to eq my_ad.price
      end
    end
+
 end
 
