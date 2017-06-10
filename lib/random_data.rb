@@ -2,7 +2,7 @@
 
    def self.random_paragraph
      sentences = []
-     rand(4..6).times do
+     rand(15..20).times do
        sentences << random_sentence
      end
  
