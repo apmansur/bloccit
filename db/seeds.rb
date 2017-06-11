@@ -7,6 +7,7 @@ require 'random_data'
    password: 'helloworld',
    role:     'admin'
  )
+
  
  # Create a member
  member = User.create!(
@@ -16,15 +17,13 @@ require 'random_data'
  )
 
   # Create Users
-   5.times do
-    
-   User.create! (
- 
-   name:     RandomData.random_name,
-   email:    RandomData.random_email,
-   password: RandomData.random_sentence
-   )
- end
+  5.times do
+    User.create!(
+     name: RandomData.random_name,
+     email: RandomData.random_email,
+     password: RandomData.random_sentence
+     )
+  end
  users = User.all
 
   # Create Topics
@@ -76,7 +75,7 @@ require 'random_data'
  
  100.times do
    Comment.create!(
-
+     user: users.sample,
      post: posts.sample,
      body: RandomData.random_paragraph
    )
@@ -98,7 +97,8 @@ require 'random_data'
    email: 'youremail.com', # replace this with your personal email
    password: 'helloworld'
  )
- 
+
+
 
  puts "Seed finished"
  puts "#{Topic.count} topics created"
