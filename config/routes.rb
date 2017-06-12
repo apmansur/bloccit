@@ -17,6 +17,9 @@ Rails.application.routes.draw do
  
  resources :sessions, only: [:new, :create, :destroy]
  
+ post '/up-vote' => 'votes#up_vote', as: :up_vote
+ post '/down-vote' => 'votes#down_vote', as: :down_vote
+ 
  get 'welcome/faq' => 'welcome#faq'
  
  post "users/confirm" => "users#confirm"
@@ -24,6 +27,9 @@ Rails.application.routes.draw do
  get 'about' => 'welcome#about'
   
   root 'welcome#index'
+  
+ 
+
 
 
 end
