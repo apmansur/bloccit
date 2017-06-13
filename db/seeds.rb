@@ -45,12 +45,12 @@ require 'random_data'
      topic:  topics.sample,
      title:  RandomData.random_sentence,
      body:   RandomData.random_paragraph
-   )
- end
-
  
- post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
- rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
+   )
+    post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)
+    rand(1..5).times { post.votes.create!(value: [-1, 1].sample, user: users.sample) }
+ end
+  posts = Post.all
 
  
  # Create Comments
@@ -63,15 +63,6 @@ require 'random_data'
    )
  end
 
- 
- # Create Unique Post to test for idempotence
- 
- Post.find_or_create_by!(
-     
-     title: "unique post",
-     body: "unique body"
-     
-    )
 
  
    user = User.first
@@ -87,3 +78,4 @@ require 'random_data'
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{Vote.count} votes created"
+ puts "#{User.count} votes created"
