@@ -10,6 +10,7 @@ class Post < ActiveRecord::Base
    validates :body, :title, uniqueness: true
    validates :user, presence: true
    
+   after_create :create_vote
     
    def up_votes
 
@@ -36,4 +37,11 @@ class Post < ActiveRecord::Base
    default_scope { order('rank DESC') }
    scope :ordered_by_title, -> {order('title DESC')}
    scope :ordered_by_reverse_created_at, -> {order('created_at ASC')}
+   
+   private 
+   
+   def create_vote
+       user.votes.create(value: 1, post: self)
+   end
+   
 end

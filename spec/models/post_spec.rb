@@ -47,6 +47,20 @@ RSpec.describe Post, type: :model do
          expect( post.up_votes ).to eq(@up_votes)
        end
      end
+     
+     describe "#create_vote" do
+        it "sets upvote to 1 for post" do
+         expect( post.up_votes ).to eq(1)
+        end
+        it " calls #create_vote when a post is created" do
+            post = topic.posts.new(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user)
+            expect(post).to receive(:create_vote)
+            post.save
+        end
+        it "ties the vote with the user who wrote the post" do
+            expect(post.votes.first.user).to eq(post.user)
+        end
+     end
  
 
      describe "#down_votes" do
