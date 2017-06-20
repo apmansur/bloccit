@@ -21,12 +21,45 @@
    </div>
  </div>
  
-<% if user_has_posts?  %>
- <h2>Posts</h2>
- <%= render @user.posts %>
- 
- <h2>Comments</h2>
- <%= render @user.comments %>
- <% else %>
- <%= "{user.name} has not submitted any posts yet." %>
-<% end %>
+<div class="col-md-8">
+  <% if user_has_posts?  %>
+   <h2>Posts</h2>
+   <%= render @user.posts %>
+   
+   <h2>Comments</h2>
+   <%= render @user.comments %>
+   <% else %>
+   <%= "#{@user.name} has not submitted any posts yet." %>
+   <% end %>
+  
+   <% if user_has_favorites?  %>
+   <h2>Favorites</h2>
+      <% @user.favorites.each do |favorite| %>
+      <div style="display: inline-block">
+         <div class="media">
+          <div>
+            <%= render partial: 'votes/voter', locals: { post: Post.all[(favorite.post_id)-1] } %>
+           <div class="media-body">
+            <h4 class="media-heading">
+              <%= link_to Post.all[(favorite.post_id)-1].title, topic_post_path(Post.all[(favorite.post_id)-1].topic, Post.all[(favorite.post_id)-1]) %>
+            </h4>
+               
+            <small>
+              submitted <%= time_ago_in_words(Post.all[(favorite.post_id)-1].created_at) %> ago by <%= User.all[(Post.all[favorite.post_id].user_id)-1].name %> <br>
+              <%= Post.all[(favorite.post_id)-1].comments.count %> Comments
+            </small>
+          </div>
+        </div>
+       </div>
+       <div class="small-gravatar">
+        <%= image_tag Post.all[(favorite.post_id)-1].user.avatar_url(64), class: 'media-object' %>
+       </div>
+       </div>
+       <% end %>
+   <% else %>
+   <%= "#{@user.name} has not favorited a post." %>
+   <% end %>
+</div>
+
+
+
